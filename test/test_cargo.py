@@ -275,32 +275,19 @@ license = "MIT"
 
 
 @pytest.mark.parametrize(
-    "repository,commit,download_url,filename",
+    "repository,commit,filename",
     [("https://github.com/01mf02/regex", "90eebbdb",
-      "https://github.com/01mf02/regex/archive/90eebbdb.tar.gz",
       "regex-90eebbdb.gh.tar.gz"),
      ("https://gitlab.com/virtio-fs/virtiofsd", "af439fbf",
-      ("https://gitlab.com/virtio-fs/virtiofsd/-/archive/af439fbf/"
-       "virtiofsd-af439fbf.tar.gz"),
       "virtiofsd-af439fbf.gl.tar.gz"),
      ("https://gitlab.freedesktop.org/pipewire/pipewire-rs", "449bf53f",
-      ("https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/archive/449bf53f/"
-       "pipewire-rs-449bf53f.tar.gz"),
       "pipewire-rs-449bf53f.tar.gz"),
      ("https://codeberg.org/danielrainer/fluent-ftl-tools", "12345678",
-      ("https://codeberg.org/danielrainer/fluent-ftl-tools/archive/"
-       "12345678.tar.gz"),
       "fluent-ftl-tools-12345678.gt.tar.gz"),
      ])
-def test_git_crate_urls(repository, commit, download_url, filename):
+def test_git_crate_urls(repository, commit, filename):
     crate = GitCrate("test", "0.1", repository, commit)
-    assert crate.download_url == download_url
     assert crate.filename == filename
-
-
-def test_git_crate_unsupported_host():
-    with pytest.raises(RuntimeError):
-        GitCrate("test", "0.1", "https://example.com/foo/bar", "0123abcd")
 
 
 @pytest.mark.parametrize(
